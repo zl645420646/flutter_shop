@@ -26,7 +26,7 @@ Future getHomePageContent() async {
 
 // 获取首页主体内容
 Future getHomePageBelowConten() async {
-  print('开始获取首页热门数据......');
+  print('开始获取首页热门数据...');
 
   try {
     Response response;
