@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'route.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: Scaffold(
-      appBar: AppBar(
-        title: Text('电商项目'),
-      ),
-      body: Text('data'),
-    ),
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(primaryColor: Colors.pink),
+    initialRoute: '/',
+    onGenerateRoute: onGenerateRoute,
   ));
 }
