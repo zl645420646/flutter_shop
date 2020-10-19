@@ -16,7 +16,7 @@ class TabBarPage extends StatefulWidget {
 
 class _TabBarPageState extends State<TabBarPage> {
   int _currentPage = 0;
-  List _tabs = [HomePage(), CategoryPage(), CartPage(), MinePage()];
+  List<Widget> _tabs = [HomePage(), CategoryPage(), CartPage(), MinePage()];
   @override
   Widget build(BuildContext context) {
     //设置适配尺寸 (填入设计稿中设备的屏幕尺寸) 此处假如设计稿是按iPhone6的尺寸设计的(iPhone6 750*1334)
@@ -25,7 +25,7 @@ class _TabBarPageState extends State<TabBarPage> {
 
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 245, 245, 1.0),
-      body: this._tabs[this._currentPage],
+      body: IndexedStack(index: this._currentPage, children: this._tabs),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: this._currentPage,
