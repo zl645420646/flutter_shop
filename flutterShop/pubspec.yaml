@@ -31,7 +31,7 @@ dependencies:
   dio: ^3.0.10 #latest version  请求
   flutter_swiper: ^1.1.6 #轮播图
   flutter_screenutil: ^3.1.0  #flutter 屏幕适配方案，让你的UI在不同尺寸的屏幕上都能显示合理的布局!
-
+  url_launcher: ^5.7.5 #拨打电话、发邮件等等
 
 dev_dependencies:
   flutter_test:

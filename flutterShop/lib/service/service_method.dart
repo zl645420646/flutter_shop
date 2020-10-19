@@ -37,6 +37,7 @@ Future getHomePageBelowConten() async {
     response =
         await dio.post(servicePath['homePageBelowConten'], data: formData);
     if (response.statusCode == 200) {
+      print('数据获取成功');
       return response.data;
     } else {
       throw Exception('后端接口出现异常');
