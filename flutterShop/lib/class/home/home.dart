@@ -3,6 +3,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'dart:convert';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../service/service_method.dart';
 
@@ -23,16 +24,7 @@ class _HomePageState extends State<HomePage>
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    //获取数据
-    getHomePageContent().then((value) {
-      setState(() {
-        this.homePageContent = value;
-      });
-    });
   }
-
-  String homePageContent = '正在获取数据';
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +34,8 @@ class _HomePageState extends State<HomePage>
         // backgroundColor: Colors.pink,
       ),
       body: FutureBuilder(
-          future: getHomePageContent(),
+          future: request('homePageContent',
+              formData: {'lon': '115.02932', 'lat': '35.76189'}),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               var data = json.decode(snapshot.data.toString());
@@ -70,8 +63,8 @@ class _HomePageState extends State<HomePage>
                 }
               ];
 
-              return SingleChildScrollView(
-                child: Column(
+              return EasyRefresh(
+                child: ListView(
                   children: [
                     SwiperDiy(swiperDateList: swiper),
                     HomeHeaderNavigator(navigatorList: navigatorList),
@@ -79,9 +72,12 @@ class _HomePageState extends State<HomePage>
                     LeaderPhone(
                         leaderImage: leaderImage, leaderPhone: leaderPhone),
                     GoodsRecommend(recommendList: recommend),
-                    FloorGoods(floors: floorList)
+                    FloorGoods(floors: floorList),
+                    HotGoodsState()
                   ],
                 ),
+                onRefresh: () async {},
+                onLoad: () async {},
               );
             } else {
               return Center(
@@ -354,6 +350,82 @@ class FloorGoods extends StatelessWidget {
             ],
           );
         }).toList(),
+      ),
+    );
+  }
+}
+
+// 火爆专区
+class HotGoodsState extends StatefulWidget {
+  HotGoodsState({Key key}) : super(key: key);
+
+  @override
+  _HotGoodsStateState createState() => _HotGoodsStateState();
+}
+
+class _HotGoodsStateState extends State<HotGoodsState> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: request('homePageBelowConten'),
+        builder: (context, snapshot) {
+          var data = json.decode(snapshot.data.toString());
+
+          List<Map> hotList = (data['data'] as List).cast();
+          if (snapshot.hasData) {
+            return Column(children: [
+              Container(
+                  width: ScreenUtil().setWidth(750),
+                  color: Color.fromRGBO(245, 245, 245, 1),
+                  padding: EdgeInsets.all(15),
+                  child: Text(
+                    '热门商品',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.pink),
+                  )),
+              Wrap(
+                spacing: 2,
+                children: hotList.map((e) {
+                  return this._HotGoods(e);
+                }).toList(),
+              )
+            ]);
+          } else {
+            return Text('没有数据');
+          }
+        });
+  }
+
+  //热门商品
+  Widget _HotGoods(data) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      width: ScreenUtil().setWidth(350),
+      child: Column(
+        children: [
+          Image.network(
+            data['image'],
+          ),
+          Text(data['name'],
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.pink,
+                  fontWeight: FontWeight.bold)),
+          Row(children: [
+            Text('￥${data['mallPrice']}',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+            Text('￥${data['price']}',
+                style: TextStyle(
+                    color: Colors.black45,
+                    decoration: TextDecoration.lineThrough))
+          ])
+        ],
       ),
     );
   }
