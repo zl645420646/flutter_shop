@@ -7,6 +7,9 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../../service/service_method.dart';
 
+int currentPage = 1;
+List hotGoodsList = [];
+
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
@@ -76,8 +79,24 @@ class _HomePageState extends State<HomePage>
                     HotGoodsState()
                   ],
                 ),
-                onRefresh: () async {},
-                onLoad: () async {},
+                onRefresh: () async {
+                  print('onRefresh');
+                },
+                onLoad: () async {
+                  print('加载更多');
+
+                  var formData = {'page': currentPage};
+                  request('homePageBelowConten', formData: formData)
+                      .then((value) {
+                    print(value);
+                    currentPage++;
+                    var data = json.decode(value.toString());
+                    List<Map> newGoodList = (data['data'] as List).cast();
+                    setState(() {
+                      hotGoodsList.addAll(newGoodList);
+                    });
+                  });
+                },
               );
             } else {
               return Center(
@@ -147,6 +166,7 @@ class HomeHeaderNavigator extends StatelessWidget {
       padding: EdgeInsets.all(3.0),
       height: ScreenUtil().setHeight(320),
       child: GridView.count(
+        physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.all(5.0),
         crossAxisCount: 5,
         children: navigatorList.map((e) {
@@ -365,41 +385,24 @@ class HotGoodsState extends StatefulWidget {
 
 class _HotGoodsStateState extends State<HotGoodsState> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: request('homePageBelowConten'),
-        builder: (context, snapshot) {
-          var data = json.decode(snapshot.data.toString());
-
-          List<Map> hotList = (data['data'] as List).cast();
-          if (snapshot.hasData) {
-            return Column(children: [
-              Container(
-                  width: ScreenUtil().setWidth(750),
-                  color: Color.fromRGBO(245, 245, 245, 1),
-                  padding: EdgeInsets.all(15),
-                  child: Text(
-                    '热门商品',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.pink),
-                  )),
-              Wrap(
-                spacing: 2,
-                children: hotList.map((e) {
-                  return this._HotGoods(e);
-                }).toList(),
-              )
-            ]);
-          } else {
-            return Text('没有数据');
-          }
-        });
+    return Column(children: [
+      Container(
+          width: ScreenUtil().setWidth(750),
+          color: Color.fromRGBO(245, 245, 245, 1),
+          padding: EdgeInsets.all(15),
+          child: Text(
+            '热门商品',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.pink),
+          )),
+      Wrap(
+        spacing: 2,
+        children: hotGoodsList.map((e) {
+          return this._HotGoods(e);
+        }).toList(),
+      )
+    ]);
   }
 
   //热门商品
