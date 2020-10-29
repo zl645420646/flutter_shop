@@ -33,7 +33,8 @@ dependencies:
   flutter_screenutil: ^3.1.0  #flutter 屏幕适配方案，让你的UI在不同尺寸的屏幕上都能显示合理的布局!
   url_launcher: ^5.7.5 #拨打电话、发邮件等等
   flutter_easyrefresh: ^2.1.6 #上下拉刷新
-  
+  provider: ^4.3.2 #状态管理器
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
