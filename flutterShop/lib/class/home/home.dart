@@ -41,7 +41,8 @@ class _HomePageState extends State<HomePage>
               formData: {'lon': '115.02932', 'lat': '35.76189'}),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              var data = json.decode(snapshot.data.toString());
+              // var data = json.decode(snapshot.data.toString());
+              var data = snapshot.data;
 
               List<Map> swiper = (data['data']['slides'] as List).cast();
               List<Map> navigatorList =
@@ -90,7 +91,9 @@ class _HomePageState extends State<HomePage>
                       .then((value) {
                     print(value);
                     currentPage++;
-                    var data = json.decode(value.toString());
+                    // var data = json.decode(value.toString());
+                    var data = value;
+
                     List<Map> newGoodList = (data['data'] as List).cast();
                     setState(() {
                       hotGoodsList.addAll(newGoodList);
