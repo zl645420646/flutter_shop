@@ -34,6 +34,8 @@ dependencies:
   url_launcher: ^5.7.5 #拨打电话、发邮件等等
   flutter_easyrefresh: ^2.1.6 #上下拉刷新
   provider: ^4.3.2 #状态管理器
+  fluro: ^1.7.7 #路由
+  flutter_html: ^1.0.0 #web
 
 dev_dependencies:
   flutter_test:

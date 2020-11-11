@@ -10,9 +10,10 @@ class ChildCategory with ChangeNotifier {
   String mallCategoryId = ''; //大类id
   String mallSubId = ''; //子类id
 
-  getChildCategory(List list) {
+  getChildCategory(List list, String id) {
     childIndex = 0;
     childCategoryList = list;
+    mallCategoryId = id;
 
     notifyListeners();
   }
@@ -23,8 +24,9 @@ class ChildCategory with ChangeNotifier {
     notifyListeners();
   }
 
-  updateChildIndex(int index) {
+  updateChildIndex(int index, String id) {
     childIndex = index;
+    mallSubId = id;
 
     notifyListeners();
   }

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'tabs.dart';
-import 'class/home/home.dart';
-import 'class/category/category.dart';
-import 'class/cart/cart.dart';
-import 'class/mine/mine.dart';
+import './class/category/details_page.dart';
 
-final routes = {'/': (context) => TabBarPage()};
+final routes = {
+  '/': (context) => TabBarPage(),
+  '/detail': (context) => DetailsPage(),
+};
 
 // 生成路由回调的的固定写法
 // ignore: missing_return

@@ -410,29 +410,35 @@ class _HotGoodsStateState extends State<HotGoodsState> {
 
   //热门商品
   Widget _HotGoods(data) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      width: ScreenUtil().setWidth(350),
-      child: Column(
-        children: [
-          Image.network(
-            data['image'],
+    return InkWell(
+        onTap: () {
+          print(data);
+          Navigator.pushNamed(context, '/detail', arguments: {'goodsId': data});
+        },
+        child: Container(
+          padding: EdgeInsets.all(10),
+          width: ScreenUtil().setWidth(350),
+          child: Column(
+            children: [
+              Image.network(
+                data['image'],
+              ),
+              Text(data['name'],
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.pink,
+                      fontWeight: FontWeight.bold)),
+              Row(children: [
+                Text('￥${data['mallPrice']}',
+                    style:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                Text('￥${data['price']}',
+                    style: TextStyle(
+                        color: Colors.black45,
+                        decoration: TextDecoration.lineThrough))
+              ])
+            ],
           ),
-          Text(data['name'],
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.pink,
-                  fontWeight: FontWeight.bold)),
-          Row(children: [
-            Text('￥${data['mallPrice']}',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-            Text('￥${data['price']}',
-                style: TextStyle(
-                    color: Colors.black45,
-                    decoration: TextDecoration.lineThrough))
-          ])
-        ],
-      ),
-    );
+        ));
   }
 }

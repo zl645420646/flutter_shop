@@ -7,6 +7,7 @@ const servicePath = {
   'homePageBelowConten': serviceUrl + 'wxmini/homePageBelowConten', //商城首页热卖商品
   'getCategory': serviceUrl + 'wxmini/getCategory', //商城商品类别信息
   'getMallGoods': serviceUrl + 'wxmini/getMallGoods', //商城分类的商品列表
+  'getGoodDetailById': serviceUrl + 'wxmini/getGoodDetailById', //商品详细信息
 };
 
 // https://wxmini.baixingliangfan.cn/baixing/wxmini/homePageContent       首页
