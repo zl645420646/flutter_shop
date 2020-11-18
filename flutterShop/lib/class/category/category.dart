@@ -286,6 +286,7 @@ class _CategoryGoodsListSatateState extends State<CategoryGoodsListSatate> {
       },
       onLoad: () async {
         print('加载更多');
+
         var data = {
           'categoryId':
               Provider.of<ChildCategory>(context, listen: false).mallCategoryId,

@@ -36,6 +36,7 @@ dependencies:
   provider: ^4.3.2 #状态管理器
   fluro: ^1.7.7 #路由
   flutter_html: ^1.0.0 #web
+  shared_preferences: ^0.5.12 #本地缓存
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutterShop/class/category/widget/details_bottom.dart';
 import 'package:flutterShop/class/category/widget/details_tabbar.dart';
 import 'package:flutterShop/class/category/widget/details_web.dart';
 import 'package:flutterShop/provide/goodsDetailsProvide.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:flutterShop/provide/goodsDetailsProvide.dart';
 
@@ -29,17 +31,22 @@ class _DetailsPageState extends State<DetailsPage> {
             future: this._getBackInfo(context),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Container(
-                  color: Colors.black12,
-                  child: ListView(
-                    children: [
-                      DetailsTopArea(),
-                      DetailsExplain(),
-                      DetailsTabBar(),
-                      DetailsWeb()
-                    ],
+                return Stack(children: [
+                  Container(
+                    padding:
+                        EdgeInsets.only(bottom: ScreenUtil().setHeight(80)),
+                    color: Colors.black12,
+                    child: ListView(
+                      children: [
+                        DetailsTopArea(),
+                        DetailsExplain(),
+                        DetailsTabBar(),
+                        DetailsWeb()
+                      ],
+                    ),
                   ),
-                );
+                  Positioned(bottom: 0, left: 0, child: DetailsBottm())
+                ]);
               } else {
                 return Container(child: Text('暂无数据'));
               }
